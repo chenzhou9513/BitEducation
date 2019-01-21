@@ -1,6 +1,7 @@
 package com.bitedu.service.fabric;
 
 
+import com.bitedu.dto.UserCharge;
 import com.bitedu.pojo.fabric.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
@@ -19,5 +20,8 @@ public interface FabricUserClient {
     @RequestMapping(value = "/user",method = RequestMethod.POST)
     public String insertUser(@RequestBody User user);
 
+
+    @RequestMapping(value = "/UserRecharge",method = RequestMethod.POST)
+    public String chargeApply(@RequestBody UserCharge userCharge);
 
 }

@@ -10,9 +10,11 @@
     <result column="auditState" property="auditstate" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="file_id" property="fileId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, title, admin_email, company_email, apply_info, auditState, create_time, update_time
+    id, title, admin_email, company_email, apply_info, auditState, create_time, update_time, 
+    file_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -27,10 +29,12 @@
   <insert id="insert" parameterType="com.bitedu.pojo.QualificationApply" >
     insert into qualification_apply (id, title, admin_email, 
       company_email, apply_info, auditState, 
-      create_time, update_time)
+      create_time, update_time, file_id
+      )
     values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{adminEmail,jdbcType=VARCHAR}, 
       #{companyEmail,jdbcType=VARCHAR}, #{applyInfo,jdbcType=VARCHAR}, #{auditstate,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{fileId,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.bitedu.pojo.QualificationApply" >
     insert into qualification_apply
@@ -59,6 +63,9 @@
       <if test="updateTime != null" >
         update_time,
       </if>
+      <if test="fileId != null" >
+        file_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -84,6 +91,9 @@
       </if>
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fileId != null" >
+        #{fileId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -111,6 +121,9 @@
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="fileId != null" >
+        file_id = #{fileId,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -122,7 +135,8 @@
       apply_info = #{applyInfo,jdbcType=VARCHAR},
       auditState = #{auditstate,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      file_id = #{fileId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

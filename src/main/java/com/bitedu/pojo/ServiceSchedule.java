@@ -1,5 +1,7 @@
 package com.bitedu.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,6 +10,7 @@ public class ServiceSchedule implements Serializable {
 
     private String serviceId;
 
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     private Date beginDate;
 
     private Integer duration;

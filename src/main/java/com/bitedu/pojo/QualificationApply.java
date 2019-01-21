@@ -20,6 +20,8 @@ public class QualificationApply implements Serializable {
 
     private Date updateTime;
 
+    private String fileId;
+
     private static final long serialVersionUID = 1L;
 
     public String getId() {
@@ -84,5 +86,13 @@ public class QualificationApply implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(String fileId) {
+        this.fileId = fileId == null ? null : fileId.trim();
     }
 }

@@ -48,10 +48,12 @@ public class ShiroConfig{
 
         Map<String,String> filterMap = new LinkedHashMap<String,String>();
 
-        filterMap.put("/user/*", "authc");
-        filterMap.put("/logout/user", "authc");
-        filterMap.put("/company/*", "authc");
-        filterMap.put("/logout/company", "authc");
+        //filterMap.put("/user/*", "authc");
+        //filterMap.put("/logout/user", "authc");
+        //filterMap.put("/company/*", "authc");
+        //filterMap.put("/logout/company", "authc");
+
+
 
         /*
 
@@ -66,7 +68,7 @@ public class ShiroConfig{
 
         //设置登录页面，authc没通过会跳转
 
-        shiroFilterFactoryBean.setLoginUrl("/unlogin");
+        //shiroFilterFactoryBean.setLoginUrl("/unlogin");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 

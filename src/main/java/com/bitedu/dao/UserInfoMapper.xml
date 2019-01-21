@@ -166,6 +166,44 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <update id="updateByEmailSelective" parameterType="com.bitedu.pojo.UserInfo">
+    update user_info
+    <set>
+
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        balance = #{balance,jdbcType=INTEGER},
+      </if>
+      <if test="telphone != null">
+        telphone = #{telphone,jdbcType=INTEGER},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="text1 != null">
+        text1 = #{text1,jdbcType=VARCHAR},
+      </if>
+      <if test="text2 != null">
+        text2 = #{text2,jdbcType=VARCHAR},
+      </if>
+      <if test="text3 != null">
+        text3 = #{text3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where email = #{email,jdbcType=VARCHAR}
+  </update>
   <update id="updateByPrimaryKey" parameterType="com.bitedu.pojo.UserInfo">
     update user_info
     set email = #{email,jdbcType=VARCHAR},

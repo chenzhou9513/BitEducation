@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bitedu.dao.ChargeApplyMapper" >
+  <resultMap id="BaseResultMap" type="com.bitedu.pojo.ChargeApply" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="nums" property="nums" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="text1" property="text1" jdbcType="VARCHAR" />
+    <result column="text2" property="text2" jdbcType="VARCHAR" />
+    <result column="text3" property="text3" jdbcType="VARCHAR" />
+    <result column="is_approve" property="isApprove" jdbcType="INTEGER" />
+    <result column="is_charge" property="isCharge" jdbcType="INTEGER" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="admin_id" property="adminId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, email, nums, create_time, update_time, text1, text2, text3, is_approve, is_charge, 
+    account, admin_id, status
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from charge_apply
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+
+
+
+  <select id="selectAllSelective" resultMap="BaseResultMap" parameterType="com.bitedu.pojo.ChargeApply" >
+    select
+    <include refid="Base_Column_List" />
+    from charge_apply
+    where 1=1
+
+    <if test="id != null" >
+      and id = #{id,jdbcType=VARCHAR}
+    </if>
+
+    <if test="email != null" >
+        and email = #{email,jdbcType=VARCHAR}
+      </if>
+      <if test="nums != null" >
+        and nums = #{nums,jdbcType=INTEGER}
+      </if>
+      <if test="createTime != null" >
+        and  create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateTime != null" >
+        and update_time = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="text1 != null" >
+        and text1 = #{text1,jdbcType=VARCHAR}
+      </if>
+      <if test="text2 != null" >
+        and text2 = #{text2,jdbcType=VARCHAR}
+      </if>
+      <if test="text3 != null" >
+        and text3 = #{text3,jdbcType=VARCHAR}
+      </if>
+      <if test="isApprove != null" >
+        and is_approve = #{isApprove,jdbcType=INTEGER}
+      </if>
+      <if test="isCharge != null" >
+        and is_charge = #{isCharge,jdbcType=INTEGER}
+      </if>
+      <if test="account != null" >
+        and account = #{account,jdbcType=VARCHAR}
+      </if>
+      <if test="adminId != null" >
+        and admin_id = #{adminId,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null" >
+        and status = #{status,jdbcType=INTEGER}
+      </if>
+  </select>
+
+
+
+
+
+
+
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from charge_apply
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bitedu.pojo.ChargeApply" >
+    insert into charge_apply (id, email, nums, 
+      create_time, update_time, text1, 
+      text2, text3, is_approve, 
+      is_charge, account, admin_id, 
+      status)
+    values (#{id,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{nums,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{text1,jdbcType=VARCHAR}, 
+      #{text2,jdbcType=VARCHAR}, #{text3,jdbcType=VARCHAR}, #{isApprove,jdbcType=INTEGER}, 
+      #{isCharge,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{adminId,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bitedu.pojo.ChargeApply" >
+    insert into charge_apply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="nums != null" >
+        nums,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="text1 != null" >
+        text1,
+      </if>
+      <if test="text2 != null" >
+        text2,
+      </if>
+      <if test="text3 != null" >
+        text3,
+      </if>
+      <if test="isApprove != null" >
+        is_approve,
+      </if>
+      <if test="isCharge != null" >
+        is_charge,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="adminId != null" >
+        admin_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="nums != null" >
+        #{nums,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="text1 != null" >
+        #{text1,jdbcType=VARCHAR},
+      </if>
+      <if test="text2 != null" >
+        #{text2,jdbcType=VARCHAR},
+      </if>
+      <if test="text3 != null" >
+        #{text3,jdbcType=VARCHAR},
+      </if>
+      <if test="isApprove != null" >
+        #{isApprove,jdbcType=INTEGER},
+      </if>
+      <if test="isCharge != null" >
+        #{isCharge,jdbcType=INTEGER},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="adminId != null" >
+        #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bitedu.pojo.ChargeApply" >
+    update charge_apply
+    <set >
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="nums != null" >
+        nums = #{nums,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="text1 != null" >
+        text1 = #{text1,jdbcType=VARCHAR},
+      </if>
+      <if test="text2 != null" >
+        text2 = #{text2,jdbcType=VARCHAR},
+      </if>
+      <if test="text3 != null" >
+        text3 = #{text3,jdbcType=VARCHAR},
+      </if>
+      <if test="isApprove != null" >
+        is_approve = #{isApprove,jdbcType=INTEGER},
+      </if>
+      <if test="isCharge != null" >
+        is_charge = #{isCharge,jdbcType=INTEGER},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="adminId != null" >
+        admin_id = #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bitedu.pojo.ChargeApply" >
+    update charge_apply
+    set email = #{email,jdbcType=VARCHAR},
+      nums = #{nums,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      text1 = #{text1,jdbcType=VARCHAR},
+      text2 = #{text2,jdbcType=VARCHAR},
+      text3 = #{text3,jdbcType=VARCHAR},
+      is_approve = #{isApprove,jdbcType=INTEGER},
+      is_charge = #{isCharge,jdbcType=INTEGER},
+      account = #{account,jdbcType=VARCHAR},
+      admin_id = #{adminId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

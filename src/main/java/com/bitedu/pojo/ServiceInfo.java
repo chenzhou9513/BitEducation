@@ -30,6 +30,8 @@ public class ServiceInfo implements Serializable {
 
     private String text3;
 
+    private Integer capacity;
+
     private static final long serialVersionUID = 1L;
 
     public String getId() {
@@ -135,4 +137,14 @@ public class ServiceInfo implements Serializable {
     public void setText3(String text3) {
         this.text3 = text3 == null ? null : text3.trim();
     }
+
+    public Integer getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
+
+
 }
