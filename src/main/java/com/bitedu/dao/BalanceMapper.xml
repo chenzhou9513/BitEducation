@@ -10,8 +10,8 @@
      call transaction_balance_u2c(
      #{userId,jdbcType=VARCHAR,mode=IN},
      #{companyId,jdbcType=VARCHAR,mode=IN},
-     #{userDecBalance,jdbcType=INTEGER,mode=IN},
-     #{companyAddBalance,jdbcType=INTEGER,mode=IN}
+     #{userDecBalance,jdbcType=DOUBLE,mode=IN},
+     #{companyAddBalance,jdbcType=DOUBLE,mode=IN}
      )
 	</select>
 

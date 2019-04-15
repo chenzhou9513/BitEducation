@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bitedu.dao.QueryMapper" >
+
+  <select id="allUserConsumeData" parameterType="hashmap" resultType="hashmap">
+    select days , SUM(price) as nums from (
+      select b.price as price,DATE_FORMAT(a.create_time,'%Y-%m-%d') as days from user_consume a
+      left join service_info b
+      on a.service_id = b.id
+      where a.create_time between #{beginDate} and #{endDate}
+    ) c
+    group by days
+  </select>
+
+
+  <select id="userConsumeData" parameterType="hashmap" resultType="hashmap">
+    select days , SUM(price) as nums from (
+      select b.price as price,DATE_FORMAT(a.create_time,'%Y-%m-%d') as days from user_consume a
+      left join service_info b
+      on a.service_id = b.id
+      where a.create_time between #{beginDate} and #{endDate}
+      and a.email = #{email}
+    ) c
+    group by days
+  </select>
+
+  <select id="companyConsumeData" parameterType="hashmap" resultType="hashmap">
+    select days , SUM(price) as nums from (
+      select b.price as price,DATE_FORMAT(a.create_time,'%Y-%m-%d') as days from user_consume a
+      left join service_info b
+      on a.service_id = b.id
+      where a.create_time between #{beginDate} and #{endDate}
+      and b.company_email = #{email}
+    ) c
+    group by days
+  </select>
+
+  <select id="allUserChargeData" parameterType="hashmap" resultType="hashmap">
+    select days,SUM(nums) as nums from (
+    select nums,DATE_FORMAT(create_time,'%Y-%m-%d') as days from charge_apply
+    where create_time between #{beginDate} and #{endDate}
+     and is_approve = 1
+
+    ) c
+    group by days
+  </select>
+
+  <select id="userChargeData" parameterType="hashmap" resultType="hashmap">
+    select days,SUM(nums) as nums from (
+    select nums,DATE_FORMAT(create_time,'%Y-%m-%d') as days from charge_apply
+    where create_time between #{beginDate} and #{endDate}
+    and email = #{email}
+    and is_approve = 1
+
+    ) c
+    group by days
+  </select>
+
+
+  <select id="allCompanyWithdrawalData" parameterType="hashmap" resultType="hashmap">
+    select days,SUM(nums) as nums from (
+    select nums,DATE_FORMAT(create_time,'%Y-%m-%d') as days from withdrawal_apply
+    where create_time between #{beginDate} and #{endDate}
+    and is_approve = 1
+
+    ) c
+    group by days
+  </select>
+
+
+  <select id="companyWithdrawalData" parameterType="hashmap" resultType="hashmap">
+    select days,SUM(nums) as nums from (
+    select nums,DATE_FORMAT(create_time,'%Y-%m-%d') as days from withdrawal_apply
+    where create_time between #{beginDate} and #{endDate}
+    and email = #{email}
+    and is_approve = 1
+
+    ) c
+    group by days
+  </select>
+
+  <select id="companyWithdrawalCount" parameterType="hashmap" resultType="int">
+    select count(*) n  from withdrawal_apply
+    where 1=1
+    <if test="beginDate != null" >
+      and create_time between #{beginDate} and #{endDate}
+    </if>
+    and email = #{email}
+    and is_approve = 1
+  </select>
+
+
+</mapper>

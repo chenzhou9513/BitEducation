@@ -2,6 +2,8 @@ package com.bitedu.dao;
 
 import com.bitedu.pojo.ServiceSchedule;
 
+import java.util.List;
+
 public interface ServiceScheduleMapper {
     int deleteByPrimaryKey(String id);
 
@@ -14,4 +16,7 @@ public interface ServiceScheduleMapper {
     int updateByPrimaryKeySelective(ServiceSchedule record);
 
     int updateByPrimaryKey(ServiceSchedule record);
+
+    List<ServiceSchedule> selectByServiceId(String id);
+
 }

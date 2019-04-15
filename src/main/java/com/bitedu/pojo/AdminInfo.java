@@ -12,7 +12,7 @@ public class AdminInfo implements Serializable {
 
     private Integer level;
 
-    private Integer telphone;
+    private String telphone;
 
     private Date createTime;
 
@@ -58,12 +58,12 @@ public class AdminInfo implements Serializable {
         this.level = level;
     }
 
-    public Integer getTelphone() {
+    public String getTelphone() {
         return telphone;
     }
 
-    public void setTelphone(Integer telphone) {
-        this.telphone = telphone;
+    public void setTelphone(String telphone) {
+        this.telphone = telphone == null ? null : telphone.trim();
     }
 
     public Date getCreateTime() {

@@ -1,21 +1,34 @@
 package com.bitedu.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.bitedu.common.PathUtils;
 import com.bitedu.common.Result;
+import com.bitedu.common.SnowFlake;
 import com.bitedu.common.StatusCode;
 import com.bitedu.pojo.CompanyInfo;
+import com.bitedu.pojo.QualificationApply;
 import com.bitedu.pojo.ServiceInfo;
+import com.bitedu.pojo.WithdrawalApply;
+import com.bitedu.pojo.fabric.Company;
 import com.bitedu.service.CompanyService;
 import com.bitedu.service.ConsumptionService;
+import com.bitedu.service.QualificationApplyService;
+import com.bitedu.service.fabric.FabricCompanyClient;
 import com.github.pagehelper.PageHelper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+import sun.swing.FilePane;
 
-import java.io.File;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.List;
 
 @RequestMapping("/company")
@@ -23,15 +36,21 @@ import java.util.List;
 public class CompanyController {
 
 
-    private static final String UPLOADPATH = "./file/";
+    @Autowired
+    private PathUtils pathUtils;
 
     @Autowired
     private CompanyService companyService;
 
 
+    @Autowired
+    private SnowFlake snowFlake;
 
     @Autowired
     private ConsumptionService consumptionService;
+
+    @Autowired
+    private QualificationApplyService qualificationApplyService;
 
     @RequestMapping("/test")
     public Object getTest(){
@@ -72,7 +91,7 @@ public class CompanyController {
 
 
 
-    @RequestMapping(value = "/update",method = RequestMethod.PUT)
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
     public Result updateCompanyByEmail(@RequestBody CompanyInfo companyInfo) {
 
         String email = companyInfo.getEmail();
@@ -85,7 +104,14 @@ public class CompanyController {
         }
         companyInfo.setEmail(email);
 
-        return (Result)companyService.updateCompany(companyInfo);
+        CompanyInfo companyInfo1 = (CompanyInfo)companyService.updateCompany(companyInfo);
+
+        if(companyInfo1==null){
+            return new Result(false,StatusCode.NOTEXISTERROR,"用户不存在");
+        }else{
+            return new Result(true,StatusCode.SUCCESS,"更新成功");
+        }
+
 
 
     }
@@ -111,34 +137,87 @@ public class CompanyController {
     }
 
 
-    @CrossOrigin
+
+
     @RequestMapping(value = "/qualification",method = RequestMethod.POST)
-    public Result qulification(@RequestParam("file")MultipartFile file, @RequestParam("title")String title, @RequestParam("applyInfo")String applyInfo){
-
-        /*
-            String fileId = this.
-
-            if (file.isEmpty()) {
-                return new Result(false, StatusCode.ERROR, "文件为空");
-            }
+    public Result qulificationApply(@RequestParam("file")MultipartFile file,
+                                    @RequestParam("title")String title,
+                                    @RequestParam("applyInfo")String applyInfo,
+                                    @RequestParam("companyId")String companyId){
 
 
-            File path = new File(this.UPLOADPATH + file.getOriginalFilename());
-            try{
-                byte[] fileSize = file.getBytes();
-                file.transferTo(path);
-                return "上传成功";
-            }catch (IllegalStateException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return "上传失败";
+        String fileId = String.valueOf(snowFlake.nextId());
+        String fileName = file.getOriginalFilename();
+        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
 
-    */
+        if (file.isEmpty()) {
+            return new Result(false, StatusCode.ERROR, "文件为空");
+        }
+        File path = new File(this.pathUtils.getFilePath()+"/Qualification/" + fileId+"."+suffix);
+        try{
+            byte[] fileSize = file.getBytes();
+            file.transferTo(path);
+        }catch (IllegalStateException e) {
+            e.printStackTrace();
+            return new Result(false, StatusCode.ERROR, "文件上传失败");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new Result(false, StatusCode.ERROR, "文件上传失败");
+        }
 
-        return null;
+        QualificationApply qualificationApply  = new QualificationApply();
+        qualificationApply.setFileId(fileId);
+        qualificationApply.setCompanyEmail(companyId);
+        qualificationApply.setTitle(title);
+        qualificationApply.setApplyInfo(applyInfo);
+
+        return (Result)qualificationApplyService.insertNewApply(qualificationApply);
 
     }
+
+
+
+    @RequestMapping(value = "/qualification/show")
+    @ResponseBody
+    public void showImg(@RequestParam("id") String id,HttpServletRequest request,HttpServletResponse response) {
+        String pathName = this.pathUtils.getFilePath()+"/Qualification/"+id+".jpg";
+        File imgFile = new File(pathName);
+        FileInputStream fin = null;
+        OutputStream output = null;
+        try {
+            output = response.getOutputStream();
+            fin = new FileInputStream(imgFile);
+            byte[] arr = new byte[1024 * 10];
+            int n;
+            while ((n = fin.read(arr)) != -1) {
+                output.write(arr, 0, n);
+            }
+            output.flush();
+            output.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(value = "/withdrawal",method = RequestMethod.POST)
+    public Result withdrawalApply(@RequestBody JSONObject jsonObject){
+
+        WithdrawalApply withdrawalApply = new WithdrawalApply();
+        withdrawalApply.setAccount(jsonObject.getString("account"));
+        withdrawalApply.setEmail(jsonObject.getString("email"));
+        withdrawalApply.setNums(jsonObject.getDouble("nums"));
+
+        return (Result)this.companyService.insertWithdrawalApply(withdrawalApply);
+
+
+    }
+
+
+    @RequestMapping(value = "testqulification")
+    public Object testHtml(){
+        return new ModelAndView("test");
+    }
+
+
 
 }

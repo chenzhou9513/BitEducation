@@ -24,4 +24,6 @@ public interface ConsumptionService {
 
     public Object insertServiceWithSchedule(ServiceInfoWithSchedule serviceInfoWithSchedule);
 
+    public Object getTopService(int nums);
+
 }

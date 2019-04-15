@@ -1,23 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bitedu.dao.CompanyInfoMapper">
-  <resultMap id="BaseResultMap" type="com.bitedu.pojo.CompanyInfo">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
-    <result column="homepage" jdbcType="VARCHAR" property="homepage" />
-    <result column="balance" jdbcType="INTEGER" property="balance" />
-    <result column="address" jdbcType="VARCHAR" property="address" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="text1" jdbcType="VARCHAR" property="text1" />
-    <result column="text2" jdbcType="VARCHAR" property="text2" />
-    <result column="text3" jdbcType="VARCHAR" property="text3" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bitedu.dao.CompanyInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.bitedu.pojo.CompanyInfo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="homepage" property="homepage" jdbcType="VARCHAR" />
+    <result column="balance" property="balance" jdbcType="DOUBLE" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="text1" property="text1" jdbcType="VARCHAR" />
+    <result column="text2" property="text2" jdbcType="VARCHAR" />
+    <result column="text3" property="text3" jdbcType="VARCHAR" />
+    <result column="qualification_id" property="qualificationId" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     id, email, password, company_name, homepage, balance, address, create_time, update_time, 
-    text1, text2, text3
+    text1, text2, text3,qualification_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
@@ -31,38 +32,38 @@
     from company_info
     where email = #{email,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from company_info
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.bitedu.pojo.CompanyInfo">
+  <insert id="insert" parameterType="com.bitedu.pojo.CompanyInfo" >
     insert into company_info (id, email, password, 
       company_name, homepage, balance, 
       address, create_time, update_time, 
-      text1, text2, text3
-      )
+      text1, text2, text3,
+      qualification_id)
     values (#{id,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{companyName,jdbcType=VARCHAR}, #{homepage,jdbcType=VARCHAR}, #{balance,jdbcType=INTEGER}, 
+      #{companyName,jdbcType=VARCHAR}, #{homepage,jdbcType=VARCHAR}, #{balance,jdbcType=DOUBLE},
       #{address,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{text1,jdbcType=VARCHAR}, #{text2,jdbcType=VARCHAR}, #{text3,jdbcType=VARCHAR}
-      )
+      #{text1,jdbcType=VARCHAR}, #{text2,jdbcType=VARCHAR}, #{text3,jdbcType=VARCHAR},
+      #{qualificationId,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.bitedu.pojo.CompanyInfo">
+  <insert id="insertSelective" parameterType="com.bitedu.pojo.CompanyInfo" >
     insert into company_info
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
-      <if test="email != null">
+      <if test="email != null" >
         email,
       </if>
-      <if test="password != null">
+      <if test="password != null" >
         password,
       </if>
-      <if test="companyName != null">
+      <if test="companyName != null" >
         company_name,
       </if>
-      <if test="homepage != null">
+      <if test="homepage != null" >
         homepage,
       </if>
       <if test="balance != null">
@@ -86,6 +87,9 @@
       <if test="text3 != null">
         text3,
       </if>
+      <if test="qualificationId != null" >
+        qualification_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -103,8 +107,8 @@
       <if test="homepage != null">
         #{homepage,jdbcType=VARCHAR},
       </if>
-      <if test="balance != null">
-        #{balance,jdbcType=INTEGER},
+      <if test="balance != null" >
+        #{balance,jdbcType=DOUBLE},
       </if>
       <if test="address != null">
         #{address,jdbcType=VARCHAR},
@@ -124,6 +128,9 @@
       <if test="text3 != null">
         #{text3,jdbcType=VARCHAR},
       </if>
+      <if test="qualificationId != null" >
+        #{qualificationId,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.bitedu.pojo.CompanyInfo">
@@ -142,7 +149,7 @@
         homepage = #{homepage,jdbcType=VARCHAR},
       </if>
       <if test="balance != null">
-        balance = #{balance,jdbcType=INTEGER},
+        balance = #{balance,jdbcType=DOUBLE},
       </if>
       <if test="address != null">
         address = #{address,jdbcType=VARCHAR},
@@ -161,6 +168,9 @@
       </if>
       <if test="text3 != null">
         text3 = #{text3,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationId != null" >
+        qualification_id = #{qualificationId,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -178,7 +188,7 @@
         homepage = #{homepage,jdbcType=VARCHAR},
       </if>
       <if test="balance != null">
-        balance = #{balance,jdbcType=INTEGER},
+        balance = #{balance,jdbcType=DOUBLE},
       </if>
       <if test="address != null">
         address = #{address,jdbcType=VARCHAR},
@@ -198,22 +208,26 @@
       <if test="text3 != null">
         text3 = #{text3,jdbcType=VARCHAR},
       </if>
+      <if test="qualificationId != null">
+        qualification_id = #{qualificationId,jdbcType=VARCHAR},
+      </if>
     </set>
     where email = #{email,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.bitedu.pojo.CompanyInfo">
+  <update id="updateByPrimaryKey" parameterType="com.bitedu.pojo.CompanyInfo" >
     update company_info
     set email = #{email,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       company_name = #{companyName,jdbcType=VARCHAR},
       homepage = #{homepage,jdbcType=VARCHAR},
-      balance = #{balance,jdbcType=INTEGER},
+      balance = #{balance,jdbcType=DOUBLE},
       address = #{address,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       text1 = #{text1,jdbcType=VARCHAR},
       text2 = #{text2,jdbcType=VARCHAR},
-      text3 = #{text3,jdbcType=VARCHAR}
+      text3 = #{text3,jdbcType=VARCHAR},
+      qualification_id = #{qualificationId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -4,17 +4,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.bitedu.common.Result;
 import com.bitedu.common.SnowFlake;
 import com.bitedu.common.StatusCode;
-import com.bitedu.dao.AdminInfoMapper;
-import com.bitedu.dao.ChargeApplyMapper;
-import com.bitedu.dao.CompanyInfoMapper;
-import com.bitedu.dao.UserInfoMapper;
+import com.bitedu.dao.*;
 import com.bitedu.dto.ApproveChargeFabric;
-import com.bitedu.pojo.AdminInfo;
-import com.bitedu.pojo.ChargeApply;
-import com.bitedu.pojo.CompanyInfo;
-import com.bitedu.pojo.UserInfo;
+import com.bitedu.pojo.*;
 import com.bitedu.pojo.fabric.Administrator;
 import com.bitedu.pojo.fabric.Company;
+import com.bitedu.pojo.fabric.Supervice;
 import com.bitedu.service.AdminService;
 import com.bitedu.service.fabric.FabricAdminClient;
 import com.bitedu.service.fabric.FabricCompanyClient;
@@ -40,10 +35,23 @@ public class AdminServiceImpl implements AdminService {
     private ChargeApplyMapper chargeApplyMapper;
 
     @Autowired
+    private CompanyInfoMapper companyInfoMapper;
+
+    @Autowired
+    private WithdrawalApplyMapper withdrawalApplyMapper;
+
+
+    @Autowired
+    private FabricCompanyClient fabricCompanyClient;
+
+    @Autowired
     private SnowFlake snowFlake;
 
     @Autowired
     private UserInfoMapper userInfoMapper;
+
+    @Autowired
+    private SuperviseRangeMapper superviseRangeMapper;
 
     @Override
     public Object insertAdmin(AdminInfo adminInfo) {
@@ -123,5 +131,111 @@ public class AdminServiceImpl implements AdminService {
         this.userInfoMapper.updateByEmailSelective(userInfo);
 
         return new Result(true, StatusCode.SUCCESS,"批准成功" );
+    }
+
+    @Override
+    public Object approveWithdrawal(String email,String adminId, int isApprove, String withdrawalId) {
+
+        if(isApprove==1){
+
+
+            CompanyInfo companyInfo = this.companyInfoMapper.selectByEmail(email);
+            WithdrawalApply w = this.withdrawalApplyMapper.selectByPrimaryKey(withdrawalId);
+            if(companyInfo.getBalance()<w.getNums()){
+                new Result(false,StatusCode.ERROR,"余额不足");
+            }
+
+            CompanyInfo c = new CompanyInfo();
+            c.setEmail(companyInfo.getEmail());
+            c.setBalance(companyInfo.getBalance()-w.getNums());
+            this.companyInfoMapper.updateByEmailSelective(c);
+
+
+            Company company = new Company();
+            company.setAccountBalance(companyInfo.getBalance()-w.getNums());
+            company.setQualificationId(companyInfo.getQualificationId());
+
+
+            JSONObject jsonObject = null;
+            try {
+
+                jsonObject = JSONObject.parseObject((fabricCompanyClient.updateCompany(companyInfo.getEmail(),company)));
+
+            }catch (Exception e){
+
+                //    public Result(boolean flag, int code, String message) {
+                return new Result(false,StatusCode.FABRICERROR,e.toString());
+
+            }
+
+
+        }
+
+        WithdrawalApply withdrawalApply = new WithdrawalApply();
+        withdrawalApply.setId(withdrawalId);
+        withdrawalApply.setIsApprove(isApprove);
+        withdrawalApply.setAdminId(adminId);
+
+        this.withdrawalApplyMapper.updateByPrimaryKeySelective(withdrawalApply);
+
+        return new Result(true, StatusCode.SUCCESS,"批准成功" );
+    }
+
+    @Override
+    public Object updateSupervice(SuperviseRange superviseRange) {
+        this.superviseRangeMapper.updateByPrimaryKeySelective(superviseRange);
+
+        HashMap<String,String> m = new HashMap<>();
+        m.put("$class", "token.SuperviseRange");
+        if(superviseRange.getDayComNums()!=null){
+            m.put("MaxDayComsumptionNums", ""+superviseRange.getDayComNums());
+        }
+        if(superviseRange.getDayComTimes()!=null){
+            m.put("MaxDayComsumptionTimes",""+superviseRange.getDayComTimes());
+        }
+        if(superviseRange.getDayRecTimes()!=null){
+            m.put("MaxDayReChargeTimes",""+superviseRange.getDayPubTimes());
+        }
+        if(superviseRange.getDayRecNums()!=null){
+            m.put("MaxDayReChargeNums",""+superviseRange.getDayRecNums());
+        }
+        if(superviseRange.getDayPubTimes()!=null){
+            m.put("MaxDayPublishTimes", ""+superviseRange.getDayPubTimes());
+        }
+        if(superviseRange.getMonthComNums()!=null){
+            m.put("MaxMonthComsumptionNums", ""+superviseRange.getDayPubTimes());
+
+        }
+        if(superviseRange.getMonthComTimes()!=null){
+            m.put("MaxMonthComsumptionTimes", ""+superviseRange.getMonthComTimes());
+
+        }
+        if(superviseRange.getMonthPubNums()!=null){
+            m.put("MaxMonthPublishTimes", ""+superviseRange.getMonthPubNums());
+
+        }
+        if(superviseRange.getMonthRecNums()!=null){
+            m.put("MaxMonthReChargeNums", ""+superviseRange.getMonthRecNums());
+
+        }
+        if(superviseRange.getMonthRecTimes()!=null){
+            m.put("MaxMonthReChargeTimes", ""+superviseRange.getMonthRecTimes());
+
+        }
+
+
+
+        JSONObject jsonObject = null;
+        try {
+
+            jsonObject = JSONObject.parseObject((fabricAdminClient.updateSupervice(m)));
+
+        }catch (Exception e){
+
+            //    public Result(boolean flag, int code, String message) {
+            return new Result(false,StatusCode.FABRICERROR,e.toString());
+
+        }
+        return null;
     }
 }

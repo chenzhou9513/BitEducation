@@ -22,7 +22,7 @@ public class ServiceInfoFabric {
 
     private String serviceName;
 
-    private int servicePrice;
+    private double servicePrice;
 
     private int serviceType;
 
@@ -52,11 +52,11 @@ public class ServiceInfoFabric {
         this.serviceName = serviceName;
     }
 
-    public int getServicePrice() {
+    public double getServicePrice() {
         return servicePrice;
     }
 
-    public void setServicePrice(int servicePrice) {
+    public void setServicePrice(double servicePrice) {
         this.servicePrice = servicePrice;
     }
 

@@ -2,6 +2,9 @@ package com.bitedu.dao;
 
 import com.bitedu.pojo.UserConsume;
 
+import java.util.List;
+import java.util.Map;
+
 public interface UserConsumeMapper {
     int deleteByPrimaryKey(String id);
 
@@ -14,4 +17,7 @@ public interface UserConsumeMapper {
     int updateByPrimaryKeySelective(UserConsume record);
 
     int updateByPrimaryKey(UserConsume record);
+
+    List<Map<String,Object>> selectByEmailWithServiceInfo(String email);
+
 }

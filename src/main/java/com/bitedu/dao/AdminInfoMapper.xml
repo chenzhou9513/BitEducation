@@ -6,7 +6,7 @@
     <result column="admin_id" property="adminId" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="level" property="level" jdbcType="INTEGER" />
-    <result column="telphone" property="telphone" jdbcType="INTEGER" />
+    <result column="telphone" property="telphone" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="text1" property="text1" jdbcType="VARCHAR" />
@@ -39,7 +39,7 @@
       update_time, text1, text2, 
       text3)
     values (#{id,jdbcType=VARCHAR}, #{adminId,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{level,jdbcType=INTEGER}, #{telphone,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{level,jdbcType=INTEGER}, #{telphone,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP}, #{text1,jdbcType=VARCHAR}, #{text2,jdbcType=VARCHAR}, 
       #{text3,jdbcType=VARCHAR})
   </insert>
@@ -91,7 +91,7 @@
         #{level,jdbcType=INTEGER},
       </if>
       <if test="telphone != null" >
-        #{telphone,jdbcType=INTEGER},
+        #{telphone,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -123,7 +123,7 @@
         level = #{level,jdbcType=INTEGER},
       </if>
       <if test="telphone != null" >
-        telphone = #{telphone,jdbcType=INTEGER},
+        telphone = #{telphone,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -154,7 +154,7 @@
         level = #{level,jdbcType=INTEGER},
       </if>
       <if test="telphone != null" >
-        telphone = #{telphone,jdbcType=INTEGER},
+        telphone = #{telphone,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -179,7 +179,7 @@
     set admin_id = #{adminId,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       level = #{level,jdbcType=INTEGER},
-      telphone = #{telphone,jdbcType=INTEGER},
+      telphone = #{telphone,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       text1 = #{text1,jdbcType=VARCHAR},

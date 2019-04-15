@@ -17,16 +17,16 @@ public class Company implements Serializable {
 
     private double accountBalance;
 
-    private String[] qualification;
+    private String qualificationId;
 
     public Company(){}
 
-    public Company(String className, int state, String email, double accountBalance, String[] qualification) {
+    public Company(String className, int state, String email, double accountBalance, String qualificationId) {
         this.className = className;
         this.state = state;
         this.email = email;
         this.accountBalance = accountBalance;
-        this.qualification = qualification;
+        this.qualificationId = qualificationId;
     }
 
     public String getClassName() {
@@ -61,11 +61,11 @@ public class Company implements Serializable {
         this.accountBalance = accountBalance;
     }
 
-    public String[] getQualification() {
-        return qualification;
+    public String getQualificationId() {
+        return qualificationId;
     }
 
-    public void setQualification(String[] qualification) {
-        this.qualification = qualification;
+    public void setQualificationId(String qualificationId) {
+        this.qualificationId = qualificationId;
     }
 }

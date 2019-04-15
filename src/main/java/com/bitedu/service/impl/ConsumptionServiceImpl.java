@@ -11,14 +11,19 @@ import com.bitedu.dto.ServiceInfoWithSchedule;
 import com.bitedu.dto.UserConsumeService;
 import com.bitedu.pojo.*;
 import com.bitedu.service.ConsumptionService;
+import com.bitedu.service.UserService;
 import com.bitedu.service.fabric.FabricServiceClient;
 import com.bitedu.service.redis.RedisLock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Service
 public class ConsumptionServiceImpl implements ConsumptionService {
@@ -50,6 +55,11 @@ public class ConsumptionServiceImpl implements ConsumptionService {
     @Autowired
     private SnowFlake snowFlake;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public ServiceInfo getServiceByServiceId(String serviceId) {
@@ -81,7 +91,7 @@ public class ConsumptionServiceImpl implements ConsumptionService {
 
             }else {
 
-                int price = serviceInfo.getPrice();
+                double price = serviceInfo.getPrice();
 
                 CompanyInfo companyInfo = this.companyInfoMapper.selectByEmail(serviceInfo.getCompanyEmail());
 
@@ -89,19 +99,19 @@ public class ConsumptionServiceImpl implements ConsumptionService {
                 m.put("userId", userInfo.getId());
                 m.put("companyId", companyInfo.getId());
                 m.put("userDecBalance", price);
-                m.put("companyAddBalance", price);
+                //权益分配
+                m.put("companyAddBalance", (double)(price*0.997));
+                System.out.println(m.get("companyAddBalance"));
                 int res = this.balanceMapper.transactionBalanceU2C(m);
                 if(res==0){
                    return new Result(false, StatusCode.ERROR, "购买失败，请重新操作");
                 }
 
-
+                userInfo.setBalance(userInfo.getBalance()-price);
+                this.userService.updateUser(userInfo);
 
                 serviceInfo.setCapacity(serviceInfo.getCapacity() - 1);
                 this.serviceInfoMapper.updateByPrimaryKey(serviceInfo);
-
-
-
 
 
                 UserConsume userConsume = new UserConsume();
@@ -109,7 +119,7 @@ public class ConsumptionServiceImpl implements ConsumptionService {
                 userConsume.setId(String.valueOf(snowFlake.nextId()));
                 userConsume.setEmail(userInfo.getEmail());
                 userConsume.setServiceId(serviceId);
-                this.userConsumeMapper.insert(userConsume);
+                this.userConsumeMapper.insertSelective(userConsume);
 
 
                 UserConsumeService userConsumeService = new UserConsumeService(serviceId, userInfo.getEmail());
@@ -126,7 +136,24 @@ public class ConsumptionServiceImpl implements ConsumptionService {
 
                 }
 
+
          }
+
+            String key = "ConsumptionTimes::"+serviceId;
+            String val;
+            if((val=(String)redisTemplate.opsForValue().get(key))!=null){
+                val = (Integer.parseInt(val)+1)+"";
+            }else {
+                val = "1";
+            }
+            redisTemplate.opsForValue().set(key, val);
+
+
+            ZSetOperations<String, Object> opsForZSet = redisTemplate.opsForZSet();
+            TopService topService = new TopService();
+            topService.setName(serviceInfo.getName());
+            topService.setServiceId(serviceId);
+            opsForZSet.add("TopService", topService, Float.parseFloat(val));
 
         }catch (Exception e) {
             e.printStackTrace();
@@ -169,8 +196,8 @@ public class ConsumptionServiceImpl implements ConsumptionService {
     @Override
     public Object insertServiceWithSchedule(ServiceInfoWithSchedule serviceInfoWithSchedule){
         ServiceInfo serviceInfo = serviceInfoWithSchedule.getServiceInfo();
-        serviceInfo.setId(String.valueOf(snowFlake.nextId()));
-        this.serviceInfoMapper.insert(serviceInfo);
+        serviceInfo.setId("C"+String.valueOf(snowFlake.nextId()));
+        this.serviceInfoMapper.insertSelective(serviceInfo);
 
         ServiceInfoFabric serviceInfoFabric = new ServiceInfoFabric();
         serviceInfoFabric.setClassName("token.Service");
@@ -197,5 +224,14 @@ public class ConsumptionServiceImpl implements ConsumptionService {
         return new Result(true, StatusCode.SUCCESS,"发布课程成功" );
     }
 
+    @Override
+    public Object getTopService(int nums) {
 
+
+        ZSetOperations<String, Object> opsForZSet = redisTemplate.opsForZSet();
+        Set<Object> res = opsForZSet.reverseRange("TopService", 0, nums-1);
+
+
+        return new Result(true, StatusCode.SUCCESS,"查询成功",res );
+    }
 }

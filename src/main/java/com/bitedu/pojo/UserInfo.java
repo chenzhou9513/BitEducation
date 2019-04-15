@@ -12,9 +12,9 @@ public class UserInfo implements Serializable {
 
     private String nickname;
 
-    private Integer balance;
+    private Double balance;
 
-    private Integer telphone;
+    private String telphone;
 
     private Integer age;
 
@@ -62,20 +62,20 @@ public class UserInfo implements Serializable {
         this.nickname = nickname == null ? null : nickname.trim();
     }
 
-    public Integer getBalance() {
+    public Double getBalance() {
         return balance;
     }
 
-    public void setBalance(Integer balance) {
+    public void setBalance(Double balance) {
         this.balance = balance;
     }
 
-    public Integer getTelphone() {
+    public String getTelphone() {
         return telphone;
     }
 
-    public void setTelphone(Integer telphone) {
-        this.telphone = telphone;
+    public void setTelphone(String telphone) {
+        this.telphone = telphone == null ? null : telphone.trim();
     }
 
     public Integer getAge() {

@@ -3,7 +3,9 @@ package com.bitedu.service.fabric;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bitedu.dto.ApproveChargeFabric;
+import com.bitedu.pojo.SuperviseRange;
 import com.bitedu.pojo.fabric.Administrator;
+import com.bitedu.pojo.fabric.Supervice;
 import com.bitedu.pojo.fabric.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
@@ -44,5 +46,9 @@ public interface FabricAdminClient {
     */
     @RequestMapping(value = "/RejectUserRecharge",method = RequestMethod.POST)
     public String rejectUserRecharge(@RequestBody ApproveChargeFabric approveChargeFabric);
+
+
+    @RequestMapping(value = "/SuperviseRange/biteducation",method = RequestMethod.PUT)
+    public String updateSupervice(@RequestBody Map<String,String> superviseRange);
 
 }

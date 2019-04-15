@@ -6,7 +6,7 @@ import java.util.Date;
 public class QualificationInfo implements Serializable {
     private String id;
 
-    private Integer applyId;
+    private String applyId;
 
     private Integer type;
 
@@ -28,12 +28,12 @@ public class QualificationInfo implements Serializable {
         this.id = id == null ? null : id.trim();
     }
 
-    public Integer getApplyId() {
+    public String getApplyId() {
         return applyId;
     }
 
-    public void setApplyId(Integer applyId) {
-        this.applyId = applyId;
+    public void setApplyId(String applyId) {
+        this.applyId = applyId == null ? null : applyId.trim();
     }
 
     public Integer getType() {

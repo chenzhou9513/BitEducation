@@ -11,6 +11,18 @@
   <sql id="Base_Column_List" >
     id, email, service_id, create_time, update_time
   </sql>
+  <select id="selectByEmailWithServiceInfo" resultType="hashmap" parameterType="java.lang.String" >
+
+      select
+      a.id as id,b.`name` as serviceName,b.price as price , DATE_FORMAT(a.create_time,'%Y-%m-%d')  as consumeDate
+      from user_consume a
+      left join service_info b
+      on a.service_id = b.id
+
+      where email = #{email}
+  </select>
+
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

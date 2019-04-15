@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bitedu.dao.SuperviseRangeMapper" >
+  <resultMap id="BaseResultMap" type="com.bitedu.pojo.SuperviseRange" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="day_com_times" property="dayComTimes" jdbcType="INTEGER" />
+    <result column="day_com_nums" property="dayComNums" jdbcType="DOUBLE" />
+    <result column="month_com_times" property="monthComTimes" jdbcType="INTEGER" />
+    <result column="month_com_nums" property="monthComNums" jdbcType="DOUBLE" />
+    <result column="day_rec_times" property="dayRecTimes" jdbcType="INTEGER" />
+    <result column="day_rec_nums" property="dayRecNums" jdbcType="DOUBLE" />
+    <result column="month_rec_times" property="monthRecTimes" jdbcType="INTEGER" />
+    <result column="month_rec_nums" property="monthRecNums" jdbcType="DOUBLE" />
+    <result column="day_pub_times" property="dayPubTimes" jdbcType="INTEGER" />
+    <result column="month_pub_nums" property="monthPubNums" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, day_com_times, day_com_nums, month_com_times, month_com_nums, day_rec_times, 
+    day_rec_nums, month_rec_times, month_rec_nums, day_pub_times, month_pub_nums
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from supervise_range
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from supervise_range
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bitedu.pojo.SuperviseRange" >
+    insert into supervise_range (id, day_com_times, day_com_nums, 
+      month_com_times, month_com_nums, day_rec_times, 
+      day_rec_nums, month_rec_times, month_rec_nums, 
+      day_pub_times, month_pub_nums)
+    values (#{id,jdbcType=VARCHAR}, #{dayComTimes,jdbcType=INTEGER}, #{dayComNums,jdbcType=DOUBLE}, 
+      #{monthComTimes,jdbcType=INTEGER}, #{monthComNums,jdbcType=DOUBLE}, #{dayRecTimes,jdbcType=INTEGER}, 
+      #{dayRecNums,jdbcType=DOUBLE}, #{monthRecTimes,jdbcType=INTEGER}, #{monthRecNums,jdbcType=DOUBLE}, 
+      #{dayPubTimes,jdbcType=INTEGER}, #{monthPubNums,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bitedu.pojo.SuperviseRange" >
+    insert into supervise_range
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="dayComTimes != null" >
+        day_com_times,
+      </if>
+      <if test="dayComNums != null" >
+        day_com_nums,
+      </if>
+      <if test="monthComTimes != null" >
+        month_com_times,
+      </if>
+      <if test="monthComNums != null" >
+        month_com_nums,
+      </if>
+      <if test="dayRecTimes != null" >
+        day_rec_times,
+      </if>
+      <if test="dayRecNums != null" >
+        day_rec_nums,
+      </if>
+      <if test="monthRecTimes != null" >
+        month_rec_times,
+      </if>
+      <if test="monthRecNums != null" >
+        month_rec_nums,
+      </if>
+      <if test="dayPubTimes != null" >
+        day_pub_times,
+      </if>
+      <if test="monthPubNums != null" >
+        month_pub_nums,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="dayComTimes != null" >
+        #{dayComTimes,jdbcType=INTEGER},
+      </if>
+      <if test="dayComNums != null" >
+        #{dayComNums,jdbcType=DOUBLE},
+      </if>
+      <if test="monthComTimes != null" >
+        #{monthComTimes,jdbcType=INTEGER},
+      </if>
+      <if test="monthComNums != null" >
+        #{monthComNums,jdbcType=DOUBLE},
+      </if>
+      <if test="dayRecTimes != null" >
+        #{dayRecTimes,jdbcType=INTEGER},
+      </if>
+      <if test="dayRecNums != null" >
+        #{dayRecNums,jdbcType=DOUBLE},
+      </if>
+      <if test="monthRecTimes != null" >
+        #{monthRecTimes,jdbcType=INTEGER},
+      </if>
+      <if test="monthRecNums != null" >
+        #{monthRecNums,jdbcType=DOUBLE},
+      </if>
+      <if test="dayPubTimes != null" >
+        #{dayPubTimes,jdbcType=INTEGER},
+      </if>
+      <if test="monthPubNums != null" >
+        #{monthPubNums,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bitedu.pojo.SuperviseRange" >
+    update supervise_range
+    <set >
+      <if test="dayComTimes != null" >
+        day_com_times = #{dayComTimes,jdbcType=INTEGER},
+      </if>
+      <if test="dayComNums != null" >
+        day_com_nums = #{dayComNums,jdbcType=DOUBLE},
+      </if>
+      <if test="monthComTimes != null" >
+        month_com_times = #{monthComTimes,jdbcType=INTEGER},
+      </if>
+      <if test="monthComNums != null" >
+        month_com_nums = #{monthComNums,jdbcType=DOUBLE},
+      </if>
+      <if test="dayRecTimes != null" >
+        day_rec_times = #{dayRecTimes,jdbcType=INTEGER},
+      </if>
+      <if test="dayRecNums != null" >
+        day_rec_nums = #{dayRecNums,jdbcType=DOUBLE},
+      </if>
+      <if test="monthRecTimes != null" >
+        month_rec_times = #{monthRecTimes,jdbcType=INTEGER},
+      </if>
+      <if test="monthRecNums != null" >
+        month_rec_nums = #{monthRecNums,jdbcType=DOUBLE},
+      </if>
+      <if test="dayPubTimes != null" >
+        day_pub_times = #{dayPubTimes,jdbcType=INTEGER},
+      </if>
+      <if test="monthPubNums != null" >
+        month_pub_nums = #{monthPubNums,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bitedu.pojo.SuperviseRange" >
+    update supervise_range
+    set day_com_times = #{dayComTimes,jdbcType=INTEGER},
+      day_com_nums = #{dayComNums,jdbcType=DOUBLE},
+      month_com_times = #{monthComTimes,jdbcType=INTEGER},
+      month_com_nums = #{monthComNums,jdbcType=DOUBLE},
+      day_rec_times = #{dayRecTimes,jdbcType=INTEGER},
+      day_rec_nums = #{dayRecNums,jdbcType=DOUBLE},
+      month_rec_times = #{monthRecTimes,jdbcType=INTEGER},
+      month_rec_nums = #{monthRecNums,jdbcType=DOUBLE},
+      day_pub_times = #{dayPubTimes,jdbcType=INTEGER},
+      month_pub_nums = #{monthPubNums,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

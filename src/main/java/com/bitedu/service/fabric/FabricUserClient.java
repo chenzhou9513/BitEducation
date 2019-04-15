@@ -24,4 +24,7 @@ public interface FabricUserClient {
     @RequestMapping(value = "/UserRecharge",method = RequestMethod.POST)
     public String chargeApply(@RequestBody UserCharge userCharge);
 
+
+
+
 }

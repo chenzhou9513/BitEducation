@@ -3,7 +3,7 @@
 <mapper namespace="com.bitedu.dao.QualificationInfoMapper" >
   <resultMap id="BaseResultMap" type="com.bitedu.pojo.QualificationInfo" >
     <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="apply_id" property="applyId" jdbcType="INTEGER" />
+    <result column="apply_id" property="applyId" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -27,7 +27,7 @@
     insert into qualification_info (id, apply_id, type, 
       create_time, update_time, email, 
       state)
-    values (#{id,jdbcType=VARCHAR}, #{applyId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=VARCHAR}, #{applyId,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{email,jdbcType=VARCHAR}, 
       #{state,jdbcType=INTEGER})
   </insert>
@@ -61,7 +61,7 @@
         #{id,jdbcType=VARCHAR},
       </if>
       <if test="applyId != null" >
-        #{applyId,jdbcType=INTEGER},
+        #{applyId,jdbcType=VARCHAR},
       </if>
       <if test="type != null" >
         #{type,jdbcType=INTEGER},
@@ -84,7 +84,7 @@
     update qualification_info
     <set >
       <if test="applyId != null" >
-        apply_id = #{applyId,jdbcType=INTEGER},
+        apply_id = #{applyId,jdbcType=VARCHAR},
       </if>
       <if test="type != null" >
         type = #{type,jdbcType=INTEGER},
@@ -106,7 +106,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bitedu.pojo.QualificationInfo" >
     update qualification_info
-    set apply_id = #{applyId,jdbcType=INTEGER},
+    set apply_id = #{applyId,jdbcType=VARCHAR},
       type = #{type,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},

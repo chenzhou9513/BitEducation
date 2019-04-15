@@ -1,6 +1,7 @@
 package com.bitedu.dao;
 
 import com.bitedu.pojo.ServiceInfo;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 

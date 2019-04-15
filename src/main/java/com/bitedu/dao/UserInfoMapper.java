@@ -1,6 +1,7 @@
 package com.bitedu.dao;
 
 import com.bitedu.pojo.UserInfo;
+import org.springframework.cache.annotation.Cacheable;
 
 public interface UserInfoMapper {
     int deleteByPrimaryKey(String id);

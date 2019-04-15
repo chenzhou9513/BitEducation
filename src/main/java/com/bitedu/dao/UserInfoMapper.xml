@@ -1,21 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bitedu.dao.UserInfoMapper">
-  <resultMap id="BaseResultMap" type="com.bitedu.pojo.UserInfo">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
-    <result column="balance" jdbcType="INTEGER" property="balance" />
-    <result column="telphone" jdbcType="INTEGER" property="telphone" />
-    <result column="age" jdbcType="INTEGER" property="age" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="text1" jdbcType="VARCHAR" property="text1" />
-    <result column="text2" jdbcType="VARCHAR" property="text2" />
-    <result column="text3" jdbcType="VARCHAR" property="text3" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bitedu.dao.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.bitedu.pojo.UserInfo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="balance" property="balance" jdbcType="DOUBLE" />
+    <result column="telphone" property="telphone" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="text1" property="text1" jdbcType="VARCHAR" />
+    <result column="text2" property="text2" jdbcType="VARCHAR" />
+    <result column="text3" property="text3" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     id, email, password, nickname, balance, telphone, age, create_time, update_time, 
     text1, text2, text3
   </sql>
@@ -36,131 +36,131 @@
     delete from user_info
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.bitedu.pojo.UserInfo">
+  <insert id="insert" parameterType="com.bitedu.pojo.UserInfo" >
     insert into user_info (id, email, password, 
       nickname, balance, telphone, 
       age, create_time, update_time, 
       text1, text2, text3
       )
     values (#{id,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{nickname,jdbcType=VARCHAR}, #{balance,jdbcType=INTEGER}, #{telphone,jdbcType=INTEGER}, 
+      #{nickname,jdbcType=VARCHAR}, #{balance,jdbcType=DOUBLE}, #{telphone,jdbcType=VARCHAR},
       #{age,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{text1,jdbcType=VARCHAR}, #{text2,jdbcType=VARCHAR}, #{text3,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.bitedu.pojo.UserInfo">
+  <insert id="insertSelective" parameterType="com.bitedu.pojo.UserInfo" >
     insert into user_info
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
-      <if test="email != null">
+      <if test="email != null" >
         email,
       </if>
-      <if test="password != null">
+      <if test="password != null" >
         password,
       </if>
-      <if test="nickname != null">
+      <if test="nickname != null" >
         nickname,
       </if>
-      <if test="balance != null">
+      <if test="balance != null" >
         balance,
       </if>
-      <if test="telphone != null">
+      <if test="telphone != null" >
         telphone,
       </if>
-      <if test="age != null">
+      <if test="age != null" >
         age,
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         create_time,
       </if>
-      <if test="updateTime != null">
+      <if test="updateTime != null" >
         update_time,
       </if>
-      <if test="text1 != null">
+      <if test="text1 != null" >
         text1,
       </if>
-      <if test="text2 != null">
+      <if test="text2 != null" >
         text2,
       </if>
-      <if test="text3 != null">
+      <if test="text3 != null" >
         text3,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="email != null">
+      <if test="email != null" >
         #{email,jdbcType=VARCHAR},
       </if>
-      <if test="password != null">
+      <if test="password != null" >
         #{password,jdbcType=VARCHAR},
       </if>
-      <if test="nickname != null">
+      <if test="nickname != null" >
         #{nickname,jdbcType=VARCHAR},
       </if>
-      <if test="balance != null">
-        #{balance,jdbcType=INTEGER},
+      <if test="balance != null" >
+        #{balance,jdbcType=DOUBLE},
       </if>
-      <if test="telphone != null">
-        #{telphone,jdbcType=INTEGER},
+      <if test="telphone != null" >
+        #{telphone,jdbcType=VARCHAR},
       </if>
-      <if test="age != null">
+      <if test="age != null" >
         #{age,jdbcType=INTEGER},
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null">
+      <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="text1 != null">
+      <if test="text1 != null" >
         #{text1,jdbcType=VARCHAR},
       </if>
-      <if test="text2 != null">
+      <if test="text2 != null" >
         #{text2,jdbcType=VARCHAR},
       </if>
-      <if test="text3 != null">
+      <if test="text3 != null" >
         #{text3,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bitedu.pojo.UserInfo">
+  <update id="updateByPrimaryKeySelective" parameterType="com.bitedu.pojo.UserInfo" >
     update user_info
-    <set>
-      <if test="email != null">
+    <set >
+      <if test="email != null" >
         email = #{email,jdbcType=VARCHAR},
       </if>
-      <if test="password != null">
+      <if test="password != null" >
         password = #{password,jdbcType=VARCHAR},
       </if>
-      <if test="nickname != null">
+      <if test="nickname != null" >
         nickname = #{nickname,jdbcType=VARCHAR},
       </if>
-      <if test="balance != null">
-        balance = #{balance,jdbcType=INTEGER},
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=DOUBLE},
       </if>
-      <if test="telphone != null">
-        telphone = #{telphone,jdbcType=INTEGER},
+      <if test="telphone != null" >
+        telphone = #{telphone,jdbcType=VARCHAR},
       </if>
-      <if test="age != null">
+      <if test="age != null" >
         age = #{age,jdbcType=INTEGER},
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null">
+      <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="text1 != null">
+      <if test="text1 != null" >
         text1 = #{text1,jdbcType=VARCHAR},
       </if>
-      <if test="text2 != null">
+      <if test="text2 != null" >
         text2 = #{text2,jdbcType=VARCHAR},
       </if>
-      <if test="text3 != null">
+      <if test="text3 != null" >
         text3 = #{text3,jdbcType=VARCHAR},
       </if>
     </set>
@@ -178,10 +178,10 @@
         nickname = #{nickname,jdbcType=VARCHAR},
       </if>
       <if test="balance != null">
-        balance = #{balance,jdbcType=INTEGER},
+        balance = #{balance,jdbcType=DOUBLE},
       </if>
       <if test="telphone != null">
-        telphone = #{telphone,jdbcType=INTEGER},
+        telphone = #{telphone,jdbcType=VARCHAR},
       </if>
       <if test="age != null">
         age = #{age,jdbcType=INTEGER},
@@ -209,8 +209,8 @@
     set email = #{email,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       nickname = #{nickname,jdbcType=VARCHAR},
-      balance = #{balance,jdbcType=INTEGER},
-      telphone = #{telphone,jdbcType=INTEGER},
+      balance = #{balance,jdbcType=DOUBLE},
+      telphone = #{telphone,jdbcType=VARCHAR},
       age = #{age,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},

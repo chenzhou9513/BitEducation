@@ -7,9 +7,11 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.jms.annotation.EnableJms;
 
+@EnableJms
 @EnableFeignClients
-//@EnableCaching
+@EnableCaching
 @SpringBootApplication
 @ServletComponentScan
 @EnableConfigurationProperties

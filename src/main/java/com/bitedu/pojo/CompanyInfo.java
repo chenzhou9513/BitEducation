@@ -14,7 +14,7 @@ public class CompanyInfo implements Serializable {
 
     private String homepage;
 
-    private Integer balance;
+    private Double balance;
 
     private String address;
 
@@ -27,6 +27,8 @@ public class CompanyInfo implements Serializable {
     private String text2;
 
     private String text3;
+
+    private String qualificationId;
 
     private static final long serialVersionUID = 1L;
 
@@ -70,11 +72,11 @@ public class CompanyInfo implements Serializable {
         this.homepage = homepage == null ? null : homepage.trim();
     }
 
-    public Integer getBalance() {
+    public Double getBalance() {
         return balance;
     }
 
-    public void setBalance(Integer balance) {
+    public void setBalance(Double balance) {
         this.balance = balance;
     }
 
@@ -124,5 +126,13 @@ public class CompanyInfo implements Serializable {
 
     public void setText3(String text3) {
         this.text3 = text3 == null ? null : text3.trim();
+    }
+
+    public String getQualificationId() {
+        return qualificationId;
+    }
+
+    public void setQualificationId(String qualificationId) {
+        this.qualificationId = qualificationId == null ? null : qualificationId.trim();
     }
 }

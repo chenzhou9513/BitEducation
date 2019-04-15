@@ -22,6 +22,14 @@ public class QualificationApply implements Serializable {
 
     private String fileId;
 
+    private String auditinfo;
+
+    private String text1;
+
+    private String text2;
+
+    private String text3;
+
     private static final long serialVersionUID = 1L;
 
     public String getId() {
@@ -94,5 +102,37 @@ public class QualificationApply implements Serializable {
 
     public void setFileId(String fileId) {
         this.fileId = fileId == null ? null : fileId.trim();
+    }
+
+    public String getAuditinfo() {
+        return auditinfo;
+    }
+
+    public void setAuditinfo(String auditinfo) {
+        this.auditinfo = auditinfo == null ? null : auditinfo.trim();
+    }
+
+    public String getText1() {
+        return text1;
+    }
+
+    public void setText1(String text1) {
+        this.text1 = text1 == null ? null : text1.trim();
+    }
+
+    public String getText2() {
+        return text2;
+    }
+
+    public void setText2(String text2) {
+        this.text2 = text2 == null ? null : text2.trim();
+    }
+
+    public String getText3() {
+        return text3;
+    }
+
+    public void setText3(String text3) {
+        this.text3 = text3 == null ? null : text3.trim();
     }
 }

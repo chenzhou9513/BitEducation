@@ -9,6 +9,8 @@ public interface UserService {
 
     public Object insertUser(UserInfo userInfo);
 
+    public Object insertUser2(UserInfo userInfo);
+
     public UserInfo getUserByEmail(String email);
 
     public Object updateUser(UserInfo userInfo);

@@ -5,6 +5,7 @@ import com.bitedu.pojo.fabric.Company;
 import com.bitedu.pojo.fabric.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,5 +20,10 @@ public interface FabricCompanyClient {
 
     @RequestMapping(value = "/Company",method = RequestMethod.POST)
     public String insertCompany(@RequestBody Company company);
+
+    @RequestMapping(value = "/Company/{companyEmail}",method = RequestMethod.PUT)
+    public String updateCompany(@PathVariable("companyEmail") String companyEmail, @RequestBody Company company);
+
+
 
 }
